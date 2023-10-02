@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:themes/theme.dart';
+import 'package:themes/themes.dart';
 import 'splashscreen.dart'; // Importa la clase SplashScreen desde el archivo splashscreen.dart
 
 void main() {

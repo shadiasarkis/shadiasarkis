@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themes/theme.dart'; // Importa MyTheme desde theme.dart
+import 'package:themes/themes.dart'; // Importa MyTheme desde theme.dart
 import 'package:themes/main.dart'; // Importa MyTheme desde theme.dart
 
 class SplashScreen extends StatelessWidget {

@@ -16,14 +16,14 @@ class SplashScreen extends StatelessWidget {
         } else {
           // Aún esperando, muestra la pantalla de carga con la imagen centrada
           return Scaffold(
-            backgroundColor: MyTheme.lightTheme().colorScheme.primary,
+            backgroundColor: MyTheme.darkTheme().colorScheme.primary,
             body: Center(
               child: Container(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  'assets/whats.png', // Ruta de tu imagen
-                  width: 150, // Tamaño de la imagen
-                  height: 150,
+                  'assets/twitter.png', // Ruta de tu imagen
+                  width: 100, // Tamaño de la imagen
+                  height: 100,
                 ),
               ),
             ),

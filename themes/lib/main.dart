@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:themes/themes.dart';
-import 'splashscreen.dart'; // Importa la clase SplashScreen desde el archivo splashscreen.dart
+import 'splashscreen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,9 +13,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: MyTheme.lightTheme(),
-      //darkTheme: MyTheme.darkTheme(),
-      home: const SplashScreen(), // Mostrar la pantalla de carga primero
+      darkTheme: MyTheme.darkTheme(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -29,21 +28,18 @@ class HomeApp extends StatefulWidget {
 
 class _HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
-  // Agrega una variable para controlar si la pestaña "Chats" está activa
   bool _isChatsTabActive = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
   void _handleTabSelection() {
     setState(() {
-      _isChatsTabActive = _tabController.index ==
-          1; // Comprueba si la pestaña "Chats" está activa
+      _isChatsTabActive = _tabController.index == 1;
     });
   }
 
@@ -51,49 +47,25 @@ class _HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Whatsapp',
-          style: TextStyle(
-            fontSize: 20,
+        backgroundColor: MyTheme.lightTheme().colorScheme.primaryContainer,
+        title: SizedBox(
+          height: 40.0, // Ajusta según sea necesario
+          child: Image.asset(
+            'assets/twitter2.png', // Reemplaza con la ruta correcta de tu imagen
+            fit: BoxFit.contain,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            color: Colors.white,
-            icon: const Icon(Icons.camera_alt_outlined),
-            onPressed: () {
-              if (kDebugMode) {
-                print('Icono de persona presionado!');
-              }
-            },
-          ),
-          IconButton(
-            color: Colors.white,
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              if (kDebugMode) {
-                print('Icono de persona presionado!');
-              }
-            },
-          ),
-          IconButton(
-            color: Colors.white,
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {
-              if (kDebugMode) {
-                print('Icono de persona presionado!');
-              }
-            },
-          ),
-        ],
+        centerTitle: true,
+        actions: <Widget>[],
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            _buildTab('Grupos', 0),
-            _buildTabWithNumberAndColor('Chats', 5,
-                _isChatsTabActive), // Cambia el color en función de la activación
-            _buildTab('Novedades', 2),
-            _buildTab('Llamadas', 3),
+            _buildTab('For You', 0),
+            _buildTab(
+              'Following',
+              1,
+              isActive: _isChatsTabActive,
+            ),
           ],
           labelColor: Colors.white,
           unselectedLabelColor: MyTheme.lightTheme().colorScheme.secondary,
@@ -104,37 +76,6 @@ class _HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
       ),
       body: Column(
         children: [
-          // Agrega el Container blanco debajo de las pestañas
-          Container(
-            width: double.infinity,
-            height: 50,
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Icon(
-                    Icons.archive_outlined,
-                    color: MyTheme.lightTheme().colorScheme.primary,
-                    size: 24,
-                  ),
-                ),
-                const Padding(
-                  // Ajusta el espacio entre el ícono y el texto
-                  padding: EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    'Archivados',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
-          ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -145,12 +86,6 @@ class _HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
                 Center(
                   child: Text('Pestaña de Chats'),
                 ),
-                Center(
-                  child: Text('Pestaña de Novedades'),
-                ),
-                Center(
-                  child: Text('Pestaña de Llamadas'),
-                ),
               ],
             ),
           ),
@@ -158,66 +93,32 @@ class _HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Agrega aquí la lógica para manejar el botón de mensaje
           if (kDebugMode) {
             print('Botón de mensaje presionado!');
           }
         },
         backgroundColor: MyTheme.lightTheme().colorScheme.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-              10.0), // Personaliza el radio para hacerlo cuadrado
-        ), // Color primario
+        shape: CircleBorder(),
         child: const Icon(
-          Icons.message, // Icono de mensaje
-          color: Colors.white, // Color blanco
+          Icons.add,
+          color: Colors.white,
         ),
-      ), // Cierra FloatingActionButton
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .endFloat, // Posición en la esquina inferior derecha
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
-  Widget _buildTab(String title, int index) {
+  Widget _buildTab(String title, int index, {bool isActive = false}) {
     return Tab(
-      child: Text(title),
-    );
-  }
-
-  Widget _buildTabWithNumberAndColor(String title, int number, bool isActive) {
-    final circleColor = isActive
-        ? Colors.white // Cambia el color del círculo a blanco si está activo
-        : MyTheme.lightTheme()
-            .colorScheme
-            .tertiary; // Color secundario para el círculo si está inactivo
-
-    return Tab(
-      child: Row(
-        children: [
-          Text(title),
-          const SizedBox(
-              width: 4), // Ajusta el espacio entre el texto y el círculo
-          Container(
-            width: 16,
-            height: 16,
-            margin: const EdgeInsets.only(
-                left: 4), // Agrega un margen a la izquierda del círculo
-            decoration: BoxDecoration(
-              color: circleColor, // Color del círculo
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                number.toString(),
-                style: TextStyle(
-                  color: MyTheme.lightTheme().colorScheme.primary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      child: Container(
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: isActive ? Colors.white : null,
             ),
           ),
-        ],
+        ),
       ),
     );
   }

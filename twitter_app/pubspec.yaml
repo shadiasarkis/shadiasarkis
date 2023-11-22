@@ -1,0 +1,33 @@
+name: twitter_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/tw_logo_largo.png
+    - assets/images/politicos.jpg
+    - assets/images/logo_corto.png
+    - assets/images/perfil.jpeg
+    - assets/images/com1.jpg
+    - assets/images/com2.jpg
+    - assets/images/com3.jpg
+    - assets/images/perfil1.jpg
+    - assets/images/perfil3.jpg
+     
+    
